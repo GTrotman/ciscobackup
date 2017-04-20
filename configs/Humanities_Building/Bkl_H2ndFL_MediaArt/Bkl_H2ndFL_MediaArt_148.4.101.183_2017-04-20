@@ -1,0 +1,2472 @@
+terminal length 0
+Bkl_H2ndFL_MediaArt#sh run | exclude clock-period
+Building configuration...
+
+Current configuration : 66487 bytes
+!
+! Last configuration change at 08:43:01 EDT Tue Mar 28 2017 by garth
+! NVRAM config last updated at 08:43:03 EDT Tue Mar 28 2017 by garth
+!
+version 12.2
+no service pad
+service timestamps debug uptime
+service timestamps log datetime localtime
+service password-encryption
+service compress-config
+!
+hostname Bkl_H2ndFL_MediaArt
+!
+boot-start-marker
+boot-end-marker
+!
+logging console notifications
+enable secret 5 $1$NAba$ZrwLNwGJqMbPCKLl3idaM1
+!
+username netadmin password 7 05381106354F46241C
+aaa new-model
+aaa authentication login default group tacacs+ local
+aaa authentication login CONSOLE group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa authorization exec default group tacacs+ local 
+aaa authorization commands 0 default group tacacs+ local 
+aaa authorization commands 1 default group tacacs+ none 
+aaa authorization commands 4 default group tacacs+ local 
+aaa authorization commands 15 default group tacacs+ local 
+aaa accounting exec default start-stop group tacacs+
+aaa accounting commands 1 default start-stop group tacacs+
+aaa accounting commands 15 default start-stop group tacacs+
+!
+aaa session-id common
+clock timezone EST -5
+clock summer-time EDT recurring 2 Sun Mar 2:00 1 Sun Nov 2:00
+clock calendar-valid
+qos dbl
+qos map dscp 24 25 26 27 28 29 30 31 to tx-queue 4
+qos map dscp 32 33 34 35 36 37 38 39 to tx-queue 4
+qos map cos 3 to dscp 26 
+qos map cos 5 to dscp 46 
+qos
+ip subnet-zero
+ip domain-name liu.edu
+!
+!
+!
+!
+!
+!
+errdisable recovery cause bpduguard
+errdisable recovery cause storm-control
+errdisable recovery interval 180
+power redundancy-mode redundant
+no file verify auto
+spanning-tree mode pvst
+spanning-tree portfast bpdufilter default
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+policy-map autoqos-voip-policy
+  class class-default
+    dbl
+!
+!
+interface GigabitEthernet1/1
+ description Trunk-->2ndFL_IDF
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet1/2
+!
+interface GigabitEthernet2/1
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/2
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/3
+ description MediaArt_Receptionist
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/4
+ description MediaArt_Receptionist
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/5
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/6
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/7
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/8
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/9
+ description Hoy
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ storm-control action shutdown
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/10
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/11
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/12
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/13
+ description MediaArt_RM_3_Data
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/14
+ description RM_213
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/15
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/16
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/17
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/18
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/19
+ description MediaArt_Receptionist
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/20
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/21
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/22
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/23
+ description Media_Arts_Reptionist_Voice
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/24
+ switchport access vlan 710
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/25
+ description Media_Arts_Xerox
+ power inline never
+ switchport access vlan 33
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet2/26
+ description Media_Arts_Vid_Tech_Office
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/27
+ description Media_Arts_Vid_Tech_Office
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/28
+ description Media_Arts_Vid_Tech_Office
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/29
+ description Media_Arts_Vid_Tech_Office
+ switchport access vlan 228
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/30
+ description Media_Arts_2nd_Sec_Desk
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/31
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/32
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/33
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/34
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/35
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/36
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/37
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/38
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/39
+ switchport access vlan 30
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/40
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/41
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/42
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/43
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/44
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/45
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/46
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/47
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet2/48
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet3/1
+ description Bkl_AP_MediaArt
+ switchport access vlan 104
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface GigabitEthernet3/2
+ description Bkl_AP2_MediaArts
+ switchport access vlan 104
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface GigabitEthernet3/3
+ description Media_Arts_AD_Server
+ switchport access vlan 33
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface GigabitEthernet3/4
+ description MediaArt_CGI_LAB
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/5
+ description MediaArt_CGI_LAB
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/6
+ description MediaArt_CGI_LAB
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/7
+ description MediaArt_CGI_LAB
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/8
+ description MediaArt_CGI_LAB
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/9
+ description MediaArt_CGI_LAB
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/10
+ description MediaArt_CGI_LAB
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/11
+ description MediaArt_CGI_LAB
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/12
+ description MediaArt_CGI_LAB
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/13
+ description MediaArts_Vid_Edit_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/14
+ description MediaArts_Vid_Edit_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/15
+ description MediaArts_Vid_Edit_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/16
+ description MediaArts_Vid_Edit_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/17
+ description MediaArts_Vid_Edit_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/18
+ description MediaArts_Vid_Edit_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/19
+ description MediaArts_Vid_Edit_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/20
+ description MediaArts_Vid_Edit_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/21
+ description MediaArts_Vid_Edit_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/22
+ description MediaArt_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/23
+ description MediaArts_EditBay_RM3
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/24
+ description MediaArts_EditBay_RM4
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/25
+ description MediaArts_EditBay_RM6
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/26
+ description MediaArts_lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/27
+ description MediaArts_lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop | cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/28
+ description MediaArt_ConfRM
+ switchport access vlan 30
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 30
+ switchport mode trunk
+ switchport voice vlan 633
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface GigabitEthernet3/29
+ description MediaArt_Kiosk
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/30
+ description HC217
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/31
+ description Garden_AP
+ switchport access vlan 104
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface GigabitEthernet3/32
+ description MediaArts_EditBay_RM1
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/33
+ description MediaArts_Vid_Edit_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop | cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/34
+ description MediaArts_Vid_Edit_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/35
+ description MediaArts_Vid_Edit_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/36
+ description MediaArts_Vid_Edit_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/37
+ description MediaArts_Vid_Edit_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/38
+ description MediaArts_Vid_Edit_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/39
+ description MediaArts_EditBay_RM2
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/40
+ description MediaArts_Vid_Edit_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/41
+ description MediaArt_CGI_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/42
+ description MediaArt_CGI_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/43
+ description MediaArt_CGI_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/44
+ description MediaArt_CGI_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/45
+ description MediaArt_CGI_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/46
+ description MediaArt_CGI_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/47
+ description MediaArt_CGI_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/48
+ description MediaArt_CGI_Lab
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ no cdp enable
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet4/1
+ description description CGI_LAB_Teacher_Station
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet4/2
+ description Richard_Hagan
+ switchport access vlan 228
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 228
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet4/3
+ description BlueRay Player
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet4/4
+ description Richard_Hagan
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet4/5
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet4/6
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet4/7
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet4/8
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet4/9
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/10
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/11
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/12
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/13
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/14
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/15
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/16
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/17
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/18
+ switchport mode access
+ switchport voice vlan 633
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/19
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/20
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/21
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/22
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/23
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/24
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/25
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/26
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/27
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/28
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/29
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/30
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/31
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/32
+ switchport access vlan 33
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet4/33
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/34
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/35
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/36
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/37
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/38
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/39
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/40
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet4/41
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet4/42
+ description Xerox_FrontDesk
+ switchport access vlan 33
+ shutdown
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface GigabitEthernet4/43
+ description MediaArt_Receptionist
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet4/44
+ switchport access vlan 33
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet4/45
+ description MediaArt_Receptionist
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet4/46
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet4/47
+ switchport access vlan 33
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 33
+ switchport mode trunk
+ switchport voice vlan 633
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface GigabitEthernet4/48
+ switchport access vlan 228
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 228
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet5/1
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/2
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/3
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/4
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/5
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/6
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/7
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/8
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/9
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/10
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/11
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/12
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/13
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/14
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/15
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/16
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/17
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/18
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/19
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/20
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/21
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/22
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/23
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/24
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/25
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/26
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/27
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/28
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/29
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/30
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/31
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/32
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/33
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/34
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/35
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/36
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/37
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/38
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/39
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/40
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/41
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/42
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/43
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/44
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/45
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/46
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/47
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet5/48
+ shutdown
+ storm-control broadcast level 30.00
+!
+interface GigabitEthernet6/1
+!
+interface GigabitEthernet6/2
+ shutdown
+!
+interface GigabitEthernet6/3
+ shutdown
+!
+interface GigabitEthernet6/4
+ shutdown
+!
+interface GigabitEthernet6/5
+ shutdown
+!
+interface GigabitEthernet6/6
+ switchport access vlan 228
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ shutdown
+ macro description cisco-desktop | cisco-desktop | cisco-desktop
+ storm-control broadcast level 4.00
+ no cdp enable
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet6/7
+ switchport access vlan 33
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ shutdown
+ qos trust device cisco-phone
+ qos trust cos
+ macro description cisco-phone | cisco-phone
+ auto qos voip cisco-phone 
+ tx-queue 3
+   priority high
+   shape percent 33
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy output autoqos-voip-policy
+!
+interface GigabitEthernet6/8
+ shutdown
+!
+interface GigabitEthernet6/9
+ shutdown
+!
+interface GigabitEthernet6/10
+ shutdown
+!
+interface GigabitEthernet6/11
+ shutdown
+!
+interface GigabitEthernet6/12
+ shutdown
+!
+interface GigabitEthernet6/13
+ shutdown
+!
+interface GigabitEthernet6/14
+ shutdown
+!
+interface GigabitEthernet6/15
+ shutdown
+!
+interface GigabitEthernet6/16
+ shutdown
+!
+interface GigabitEthernet6/17
+ shutdown
+!
+interface GigabitEthernet6/18
+ shutdown
+!
+interface GigabitEthernet6/19
+ shutdown
+!
+interface GigabitEthernet6/20
+ shutdown
+!
+interface GigabitEthernet6/21
+ shutdown
+!
+interface GigabitEthernet6/22
+ shutdown
+!
+interface GigabitEthernet6/23
+ shutdown
+!
+interface GigabitEthernet6/24
+ shutdown
+!
+interface GigabitEthernet6/25
+ shutdown
+!
+interface GigabitEthernet6/26
+ shutdown
+!
+interface GigabitEthernet6/27
+ shutdown
+!
+interface GigabitEthernet6/28
+ shutdown
+!
+interface GigabitEthernet6/29
+ shutdown
+!
+interface GigabitEthernet6/30
+ shutdown
+!
+interface GigabitEthernet6/31
+ shutdown
+!
+interface GigabitEthernet6/32
+ shutdown
+!
+interface GigabitEthernet6/33
+ shutdown
+!
+interface GigabitEthernet6/34
+ shutdown
+!
+interface GigabitEthernet6/35
+ shutdown
+!
+interface GigabitEthernet6/36
+ shutdown
+!
+interface GigabitEthernet6/37
+ shutdown
+!
+interface GigabitEthernet6/38
+ shutdown
+!
+interface GigabitEthernet6/39
+ shutdown
+!
+interface GigabitEthernet6/40
+ shutdown
+!
+interface GigabitEthernet6/41
+ shutdown
+!
+interface GigabitEthernet6/42
+ shutdown
+!
+interface GigabitEthernet6/43
+ shutdown
+!
+interface GigabitEthernet6/44
+ shutdown
+!
+interface GigabitEthernet6/45
+ shutdown
+!
+interface GigabitEthernet6/46
+ shutdown
+!
+interface GigabitEthernet6/47
+ shutdown
+!
+interface GigabitEthernet6/48
+ description Trasparent_Switch
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Vlan1
+ ip address 148.4.101.183 255.255.255.0
+!
+ip default-gateway 148.4.101.66
+ip route 0.0.0.0 0.0.0.0 148.4.101.66
+no ip http server
+no ip http secure-server
+!
+!
+access-list 11 permit 148.4.29.213
+access-list 11 permit 148.4.29.209
+access-list 11 permit 148.4.101.1
+!
+snmp-server community BK_cisco RO
+snmp-server community BK_cisco@es0 RO
+snmp-server location H Building
+snmp-server contact Network Services ext. 1082
+tacacs-server host 148.4.252.2 key 7 011F57117B590D5E72
+tacacs-server host 148.4.172.2 key 7 011F57117B590D5E72
+tacacs-server directed-request
+radius-server source-ports 1645-1646
+!
+control-plane
+!
+!
+line con 0
+ logging synchronous
+ stopbits 1
+line vty 0 4
+ password 7 142405021807220621
+ length 0
+!
+!
+monitor session 1 source interface Gi1/1
+monitor session 1 destination interface Gi6/1
+ntp server 148.4.29.15
+end
+
+Bkl_H2ndFL_MediaArt#exit

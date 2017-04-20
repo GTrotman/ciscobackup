@@ -1,0 +1,382 @@
+terminal length 0
+Bkl_M_4fl_Jornalism#sh run | exclude clock-period
+Building configuration...
+
+Current configuration : 9173 bytes
+!
+version 12.2
+no service pad
+service timestamps debug uptime
+service timestamps log uptime
+service password-encryption
+!
+hostname Bkl_M_4fl_Jornalism
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$y/x/$zhQZd6/aJ0ZQ9KSS8ko8v1
+!
+username netadmin secret 5 $1$beK/$xopPrbPVLjoSyOKrZ9ZAt1
+!
+!
+aaa new-model
+!
+!
+aaa authentication login default group tacacs+ local
+aaa authentication login CONSOLE group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa authorization exec default group tacacs+ local 
+aaa authorization commands 0 default group tacacs+ local 
+aaa authorization commands 1 default group tacacs+ none 
+aaa authorization commands 4 default group tacacs+ local 
+aaa authorization commands 15 default group tacacs+ local 
+aaa accounting exec default start-stop group tacacs+
+aaa accounting commands 1 default start-stop group tacacs+
+aaa accounting commands 15 default start-stop group tacacs+
+!
+!
+!
+aaa session-id common
+clock timezone EST -5
+clock summer-time EDT recurring
+system mtu routing 1500
+ip domain-name Bkl_Liunet.liu.edu
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-1433197696
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1433197696
+ revocation-check none
+ rsakeypair TP-self-signed-1433197696
+!
+!
+crypto pki certificate chain TP-self-signed-1433197696
+ certificate self-signed 01
+  30820249 308201B2 A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 31343333 31393736 3936301E 170D3933 30333031 30303031 
+  34325A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D31 34333331 
+  39373639 3630819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100A80F 2F97150A 43FCBCED AF8BE78C 47C0106E 6E3BC5E6 781755B9 C4CAC301 
+  C5837A32 CD4A17A7 71D8DD38 6032F468 08465A6C A563E125 AD51E999 9174AFB4 
+  6364C8CE F5FC3AEB 57A1CFAD 6CFD4EE1 6CC5664A 9FFDA8C1 BB0CC903 008A9480 
+  760ACEF3 8C0A77BA 70554F7A 0198EBA1 E53D230E 8DBA2633 86E5BCA5 A0DC92C4 
+  53510203 010001A3 71306F30 0F060355 1D130101 FF040530 030101FF 301C0603 
+  551D1104 15301382 114D5F34 666C5F4A 6F75726E 616C6973 6D2E301F 0603551D 
+  23041830 168014C1 5491D916 2B70E2E3 854528EB 3CF72614 63973130 1D060355 
+  1D0E0416 0414C154 91D9162B 70E2E385 4528EB3C F7261463 9731300D 06092A86 
+  4886F70D 01010405 00038181 001A2A67 A67E14F2 85C4AB0A D4A49624 7FE109C2 
+  920DE83C 3C2B7AD0 806B12E1 565DBC02 9E97BBD1 410499B5 AE1E9F32 4A4775BE 
+  5DC2727C 6D6B793F 6DE3CCA5 27877881 9647C8CB 4C9F6E22 66DC559A 3B9F93E8 
+  8AB6E69B E6CE359C 4ADD8A1F 775B5918 E6CA6DB0 D966B87D C51CCCB6 A0F8EEAE 
+  1D3BC7B2 48A8C79B 24774808 44
+  quit
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+interface FastEthernet0/1
+ description 6500----->Uplink
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet0/2
+ switchport access vlan 39
+ switchport trunk native vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet0/3
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/4
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/5
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/6
+ switchport access vlan 213
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet0/7
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/8
+ description Journalism Lab
+ switchport access vlan 225
+ power inline never
+ spanning-tree portfast
+!
+interface FastEthernet0/9
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/10
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/11
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/12
+ description Journalism Lab
+ switchport access vlan 225
+ shutdown
+ spanning-tree portfast
+!
+interface FastEthernet0/13
+ description Operator Console
+ switchport access vlan 225
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet0/14
+ description Sloan wing
+ switchport access vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet0/15
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/16
+ switchport access vlan 213
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet0/17
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/18
+ description Journalism Lab
+ switchport access vlan 225
+ shutdown
+ spanning-tree portfast
+!
+interface FastEthernet0/19
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/20
+ description Journalism Lab
+ switchport access vlan 225
+ shutdown
+ spanning-tree portfast
+!
+interface FastEthernet0/21
+ description Journalism Lab
+ switchport access vlan 225
+ shutdown
+ spanning-tree portfast
+!
+interface FastEthernet0/22
+ description Journalism Lab
+ switchport access vlan 225
+ shutdown
+ spanning-tree portfast
+!
+interface FastEthernet0/23
+ description Journalism Lab
+ switchport access vlan 225
+ shutdown
+ spanning-tree portfast
+!
+interface FastEthernet0/24
+ description Journalism Lab
+ switchport access vlan 225
+ shutdown
+ spanning-tree portfast
+!
+interface FastEthernet0/25
+ description Journalism Lab
+ switchport access vlan 225
+ shutdown
+ spanning-tree portfast
+!
+interface FastEthernet0/26
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/27
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/28
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/29
+ description Journalism Lab
+ switchport access vlan 225
+ shutdown
+ spanning-tree portfast
+!
+interface FastEthernet0/30
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/31
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/32
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/33
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/34
+ description AP_Dugean
+ switchport access vlan 102
+!
+interface FastEthernet0/35
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/36
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/37
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/38
+ description Journalism Lab
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet0/39
+ description Phone
+ switchport access vlan 225
+ switchport voice vlan 631
+ spanning-tree portfast
+!
+interface FastEthernet0/40
+ switchport access vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet0/41
+ description AP_7th_Sci_Lab
+ switchport access vlan 213
+ spanning-tree portfast
+!
+interface FastEthernet0/42
+ description AP_9fl_Lab
+ switchport access vlan 102
+!
+interface FastEthernet0/43
+ description Dance_Studio
+ switchport access vlan 39
+ switchport trunk native vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet0/44
+ description Dance_Studio
+ switchport access vlan 39
+ switchport trunk native vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet0/45
+ description Pigeon Cam A
+ switchport access vlan 47
+!
+interface FastEthernet0/46
+ description Pigeon Cam B
+ switchport access vlan 47
+!
+interface FastEthernet0/47
+ switchport access vlan 39
+ switchport trunk native vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet0/48
+ description Public Relaiton
+ switchport access vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface GigabitEthernet0/3
+!
+interface GigabitEthernet0/4
+!
+interface Vlan1
+ ip address 148.4.101.145 255.255.255.0
+!
+ip default-gateway 148.4.101.66
+ip classless
+ip http server
+ip http secure-server
+!
+ip sla enable reaction-alerts
+logging 148.4.101.1
+access-list 11 permit 148.4.29.213
+access-list 11 permit 148.4.29.209
+access-list 11 permit 148.4.101.1
+snmp-server community BK_cisco RO 11
+snmp-server community BK_cisco@es2 RO
+snmp-server location M Building
+snmp-server contact Network Services ext. 1082
+tacacs-server host 148.4.252.2 timeout 5
+tacacs-server directed-request
+tacacs-server key 7 011F57117B590D5E72
+!
+!
+line con 0
+line vty 0 4
+ password 7 073C36455A0A112812
+line vty 5 15
+!
+ntp server 148.4.29.15
+end
+
+Bkl_M_4fl_Jornalism#exit

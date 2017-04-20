@@ -1,0 +1,372 @@
+terminal length 0
+BKL_Hbuil_6_FL#sh run | exclude clock-period
+Building configuration...
+
+Current configuration : 8478 bytes
+!
+! Last configuration change at 12:58:26 EDT Wed Mar 22 2017 by garth
+! NVRAM config last updated at 11:14:32 EDT Fri Mar 17 2017 by flopez
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname BKL_Hbuil_6_FL
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$j8Yw$OCXxcaHur0Mm7KauKTPCX.
+!
+username netadmin password 7 05381106354F46241C
+!
+!
+aaa new-model
+!
+!
+aaa authentication login default group tacacs+ local
+aaa authentication login CONSOLE group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa authorization exec default group tacacs+ local 
+aaa authorization commands 0 default group tacacs+ local 
+aaa authorization commands 1 default group tacacs+ none 
+aaa authorization commands 4 default group tacacs+ local 
+aaa authorization commands 15 default group tacacs+ local 
+aaa accounting exec default start-stop group tacacs+
+aaa accounting commands 1 default start-stop group tacacs+
+aaa accounting commands 15 default start-stop group tacacs+
+!
+!
+!
+aaa session-id common
+clock timezone EDT -5
+clock summer-time EDT recurring
+switch 1 provision ws-c3750-48p
+system mtu routing 1500
+ip domain-name liu.edu
+!
+!
+cluster enable H_6th_Floor 0
+cluster member 1 mac-address 0002.7d78.b980
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+interface FastEthernet1/0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet1/0/2
+ description Cluster member
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet1/0/3
+ description Class_RM_Data
+ switchport access vlan 220
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/4
+ description Class_RM_Data
+ switchport access vlan 220
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/5
+ description Class_RM_Data
+ switchport access vlan 220
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/6
+ description Class_RM_Data
+ switchport access vlan 220
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/7
+ description Class_RM_Data
+ switchport access vlan 220
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/8
+ description Class_RM_Data
+ switchport access vlan 220
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/9
+ description Class_RM_Data
+ switchport access vlan 220
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/10
+ description Class_RM_Data
+ switchport access vlan 220
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/11
+ description Class_RM_Data
+ switchport access vlan 220
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/12
+ description Class_RM_Data
+ switchport access vlan 228
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/13
+ description Class_RM_Data
+ switchport access vlan 220
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/14
+ description Class_RM_Data
+ switchport access vlan 220
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/15
+ description Class_RM_Data
+ switchport access vlan 220
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/16
+ description Class_RM_Data
+ switchport access vlan 220
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/17
+ description Class_RM_Data
+ switchport access vlan 220
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/18
+ description Class_RM_Data
+ switchport access vlan 220
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/19
+ description Class_RM_Data
+ switchport access vlan 210
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/20
+ description Class_RM_Data
+ switchport access vlan 210
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/21
+ description Class_RM_Data
+ switchport access vlan 210
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/22
+ description Class_RM_Data
+ switchport access vlan 210
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/23
+ description Class_RM_Data
+ switchport access vlan 210
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/24
+ description Class_RM_Data
+ switchport access vlan 220
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/25
+ description Class_RM_Data
+ switchport access vlan 210
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/26
+ description Class_RM_Data
+ switchport access vlan 210
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/27
+ description Class_RM_Data
+ switchport access vlan 210
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/28
+ description Class_RM_Data
+ switchport access vlan 210
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/29
+ description Class_RM_Data
+ switchport access vlan 210
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/30
+ description Class_RM_Data
+ switchport access vlan 210
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/31
+ description Class_RM_Data
+ switchport access vlan 777
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/32
+ description Class_RM_Data
+ switchport access vlan 220
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+!
+interface FastEthernet1/0/33
+ description Smartclass_RM
+ switchport access vlan 210
+ spanning-tree portfast
+!
+interface FastEthernet1/0/34
+ description Smartclass_RM
+ switchport access vlan 210
+ spanning-tree portfast
+!
+interface FastEthernet1/0/35
+ description Smartclass_RM
+ switchport access vlan 210
+ spanning-tree portfast
+!
+interface FastEthernet1/0/36
+ description Smartclass_RM
+ switchport access vlan 210
+ spanning-tree portfast
+!
+interface FastEthernet1/0/37
+ description Smartclass_RM
+ switchport access vlan 210
+ spanning-tree portfast
+!
+interface FastEthernet1/0/38
+ description Smartclass_RM
+ switchport access vlan 210
+ spanning-tree portfast
+!
+interface FastEthernet1/0/39
+ description Smartclass_RM
+ switchport access vlan 210
+ spanning-tree portfast
+!
+interface FastEthernet1/0/40
+ description Smartclass_RM
+ switchport access vlan 210
+ spanning-tree portfast
+!
+interface FastEthernet1/0/41
+ description Smartclass_RM
+ switchport access vlan 210
+ spanning-tree portfast
+!
+interface FastEthernet1/0/42
+ description Smartclass_RM
+ switchport access vlan 210
+ spanning-tree portfast
+!
+interface FastEthernet1/0/43
+ description Smartclass_RM
+ switchport access vlan 210
+ spanning-tree portfast
+!
+interface FastEthernet1/0/44
+ description Smartclass_RM
+ switchport access vlan 210
+ spanning-tree portfast
+!
+interface FastEthernet1/0/45
+ description Smartclass_RM
+ switchport access vlan 210
+ spanning-tree portfast
+!
+interface FastEthernet1/0/46
+ description Smartclass_RM
+ switchport access vlan 777
+ spanning-tree portfast
+!
+interface FastEthernet1/0/47
+ description AP
+ switchport access vlan 777
+!
+interface FastEthernet1/0/48
+ description AP
+ switchport access vlan 104
+!
+interface GigabitEthernet1/0/1
+!
+interface GigabitEthernet1/0/2
+!
+interface GigabitEthernet1/0/3
+!
+interface GigabitEthernet1/0/4
+!
+interface Vlan1
+ ip address 148.4.101.186 255.255.255.0
+!
+ip default-gateway 148.4.101.66
+ip classless
+ip http server
+ip http secure-server
+!
+!
+ip sla enable reaction-alerts
+logging 148.4.101.1
+access-list 11 permit 148.4.29.209
+access-list 11 permit 148.4.101.1
+snmp-server community BK_cisco RO 11
+snmp-server location HBuilding
+snmp-server contact Network Services ext. 1082
+tacacs-server host 148.4.252.2 key 7 011F57117B590D5E72
+tacacs-server directed-request
+!
+!
+line con 0
+ logging synchronous
+ stopbits 1
+line vty 0 4
+ password 7 0028420811433D1E1F
+ length 0
+line vty 5 15
+!
+ntp server 148.4.25.5
+end
+
+BKL_Hbuil_6_FL#exit

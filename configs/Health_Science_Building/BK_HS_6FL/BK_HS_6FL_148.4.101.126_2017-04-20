@@ -1,0 +1,760 @@
+terminal length 0
+BK_HS_6FL#sh run | exclude clock-period
+Building configuration...
+
+Current configuration : 23264 bytes
+!
+version 12.2
+no service pad
+service timestamps debug uptime
+service timestamps log datetime localtime
+no service password-encryption
+!
+hostname BK_HS_6FL
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$UA8z$9T.0FrH7e/wNioGM4SGrj.
+!
+username netadmin secret 5 $1$beK/$xopPrbPVLjoSyOKrZ9ZAt1
+!
+!
+aaa new-model
+!
+!
+aaa authentication login default group tacacs+ local
+aaa authentication login CONSOLE group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa authorization exec default group tacacs+ local 
+aaa authorization commands 0 default group tacacs+ local 
+aaa authorization commands 1 default group tacacs+ none 
+aaa authorization commands 4 default group tacacs+ local 
+aaa authorization commands 15 default group tacacs+ local 
+aaa accounting exec default start-stop group tacacs+
+aaa accounting commands 1 default start-stop group tacacs+
+aaa accounting commands 15 default start-stop group tacacs+
+!
+!
+!
+aaa session-id common
+clock timezone EST -5
+clock summer-time EDT recurring
+system mtu routing 1504
+ip domain-name Bkl_liunet.liu.edu
+!
+!
+!
+mls qos map cos-dscp 0 8 16 26 32 46 48 56
+mls qos srr-queue input bandwidth 90 10
+mls qos srr-queue input threshold 1 8 16
+mls qos srr-queue input threshold 2 34 66
+mls qos srr-queue input buffers 67 33 
+mls qos srr-queue input cos-map queue 1 threshold 2 1
+mls qos srr-queue input cos-map queue 1 threshold 3 0
+mls qos srr-queue input cos-map queue 2 threshold 1 2
+mls qos srr-queue input cos-map queue 2 threshold 2 4 6 7
+mls qos srr-queue input cos-map queue 2 threshold 3 3 5
+mls qos srr-queue input dscp-map queue 1 threshold 2 9 10 11 12 13 14 15
+mls qos srr-queue input dscp-map queue 1 threshold 3 0 1 2 3 4 5 6 7
+mls qos srr-queue input dscp-map queue 1 threshold 3 32
+mls qos srr-queue input dscp-map queue 2 threshold 1 16 17 18 19 20 21 22 23
+mls qos srr-queue input dscp-map queue 2 threshold 2 33 34 35 36 37 38 39 48
+mls qos srr-queue input dscp-map queue 2 threshold 2 49 50 51 52 53 54 55 56
+mls qos srr-queue input dscp-map queue 2 threshold 2 57 58 59 60 61 62 63
+mls qos srr-queue input dscp-map queue 2 threshold 3 24 25 26 27 28 29 30 31
+mls qos srr-queue input dscp-map queue 2 threshold 3 40 41 42 43 44 45 46 47
+mls qos srr-queue output cos-map queue 1 threshold 3 5
+mls qos srr-queue output cos-map queue 2 threshold 3 3 6 7
+mls qos srr-queue output cos-map queue 3 threshold 3 2 4
+mls qos srr-queue output cos-map queue 4 threshold 2 1
+mls qos srr-queue output cos-map queue 4 threshold 3 0
+mls qos srr-queue output dscp-map queue 1 threshold 3 40 41 42 43 44 45 46 47
+mls qos srr-queue output dscp-map queue 2 threshold 3 24 25 26 27 28 29 30 31
+mls qos srr-queue output dscp-map queue 2 threshold 3 48 49 50 51 52 53 54 55
+mls qos srr-queue output dscp-map queue 2 threshold 3 56 57 58 59 60 61 62 63
+mls qos srr-queue output dscp-map queue 3 threshold 3 16 17 18 19 20 21 22 23
+mls qos srr-queue output dscp-map queue 3 threshold 3 32 33 34 35 36 37 38 39
+mls qos srr-queue output dscp-map queue 4 threshold 1 8
+mls qos srr-queue output dscp-map queue 4 threshold 2 9 10 11 12 13 14 15
+mls qos srr-queue output dscp-map queue 4 threshold 3 0 1 2 3 4 5 6 7
+mls qos queue-set output 1 threshold 1 138 138 92 138
+mls qos queue-set output 1 threshold 2 138 138 92 400
+mls qos queue-set output 1 threshold 3 36 77 100 318
+mls qos queue-set output 1 threshold 4 20 50 67 400
+mls qos queue-set output 2 threshold 1 149 149 100 149
+mls qos queue-set output 2 threshold 2 118 118 100 235
+mls qos queue-set output 2 threshold 3 41 68 100 272
+mls qos queue-set output 2 threshold 4 42 72 100 242
+mls qos queue-set output 1 buffers 10 10 26 54
+mls qos queue-set output 2 buffers 16 6 17 61
+mls qos
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+interface FastEthernet0/1
+ description Uplink---->Basement
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ srr-queue bandwidth share 10 10 60 20
+ srr-queue bandwidth shape 10 0 0 0
+ mls qos trust cos
+ auto qos voip trust 
+ macro description cisco-switch
+ spanning-tree link-type point-to-point
+!
+interface FastEthernet0/2
+ switchport access vlan 35
+ switchport mode access
+ switchport voice vlan 610
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ srr-queue bandwidth share 10 10 60 20
+ srr-queue bandwidth shape 10 0 0 0
+ mls qos trust device cisco-phone
+ mls qos trust cos
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-phone
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/3
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/4
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/5
+ description CPrint_B-HS-604-1
+ switchport access vlan 710
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/6
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/7
+ description HS 606
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/8
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/9
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/10
+ switchport access vlan 35
+ switchport mode access
+ switchport voice vlan 610
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ srr-queue bandwidth share 10 10 60 20
+ srr-queue bandwidth shape 10 0 0 0
+ mls qos trust device cisco-phone
+ mls qos trust cos
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-phone
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/11
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/12
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/13
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/14
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/15
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/16
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/17
+ description HS-614-Printer
+ switchport access vlan 710
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/18
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/19
+ switchport access vlan 35
+ switchport mode access
+ switchport voice vlan 610
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ srr-queue bandwidth share 10 10 60 20
+ srr-queue bandwidth shape 10 0 0 0
+ mls qos trust device cisco-phone
+ mls qos trust cos
+ auto qos voip cisco-phone 
+ macro description cisco-phone
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/20
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/21
+ switchport access vlan 35
+ switchport mode access
+ switchport voice vlan 610
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ srr-queue bandwidth share 10 10 60 20
+ srr-queue bandwidth shape 10 0 0 0
+ mls qos trust device cisco-phone
+ mls qos trust cos
+ auto qos voip cisco-phone 
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop | cisco-phone | cisco-phone | cisco-phone
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/22
+ switchport access vlan 220
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/23
+ switchport access vlan 220
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/24
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/25
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/26
+ switchport access vlan 35
+ switchport mode access
+ switchport voice vlan 610
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-phone | cisco-phone 
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/27
+ description HS Cam
+ switchport access vlan 777
+!
+interface FastEthernet0/28
+ description HS Cam
+ switchport access vlan 777
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/29
+ description HS Cam
+ switchport access vlan 777
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/30
+ description HS Cam
+ switchport access vlan 777
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/31
+ description HS Cam
+ switchport access vlan 777
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/32
+ description HS Cam
+ switchport access vlan 777
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/33
+ description HS Cam
+ switchport access vlan 777
+!
+interface FastEthernet0/34
+ description HS Cam
+ switchport access vlan 777
+!
+interface FastEthernet0/35
+ description AP
+ switchport access vlan 105
+!
+interface FastEthernet0/36
+!
+interface FastEthernet0/37
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/38
+ switchport access vlan 35
+ switchport mode access
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/39
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/40
+ description B&G Painter
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ shutdown
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/41
+ switchport access vlan 35
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ storm-control broadcast level 30.00
+ storm-control multicast level 30.00
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/42
+ switchport access vlan 35
+ switchport mode access
+ switchport voice vlan 610
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ srr-queue bandwidth share 10 10 60 20
+ srr-queue bandwidth shape 10 0 0 0
+ mls qos trust device cisco-phone
+ mls qos trust cos
+ auto qos voip cisco-phone 
+ macro description cisco-phone | cisco-phone | cisco-phone
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/43
+ switchport access vlan 35
+ switchport mode access
+ switchport voice vlan 610
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ srr-queue bandwidth share 10 10 60 20
+ srr-queue bandwidth shape 10 0 0 0
+ mls qos trust device cisco-phone
+ mls qos trust cos
+ auto qos voip cisco-phone 
+ macro description cisco-phone | cisco-phone | cisco-phone
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/44
+ switchport access vlan 35
+ switchport mode access
+ switchport voice vlan 610
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ srr-queue bandwidth share 10 10 60 20
+ srr-queue bandwidth shape 10 0 0 0
+ mls qos trust device cisco-phone
+ mls qos trust cos
+ auto qos voip cisco-phone 
+ macro description cisco-phone | cisco-phone | cisco-phone
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/45
+ switchport access vlan 35
+ switchport mode access
+ switchport voice vlan 610
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ srr-queue bandwidth share 10 10 60 20
+ srr-queue bandwidth shape 10 0 0 0
+ mls qos trust device cisco-phone
+ mls qos trust cos
+ auto qos voip cisco-phone 
+ macro description cisco-phone
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/46
+ switchport access vlan 35
+ switchport mode access
+ switchport voice vlan 610
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ srr-queue bandwidth share 10 10 60 20
+ srr-queue bandwidth shape 10 0 0 0
+ mls qos trust device cisco-phone
+ mls qos trust cos
+ auto qos voip cisco-phone 
+ macro description cisco-phone
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/47
+ description AP
+ switchport access vlan 105
+!
+interface FastEthernet0/48
+ description AP
+ switchport access vlan 105
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface GigabitEthernet0/3
+!
+interface GigabitEthernet0/4
+!
+interface Vlan1
+ ip address 148.4.101.126 255.255.255.0
+!
+ip default-gateway 148.4.101.66
+ip classless
+ip http server
+ip http secure-server
+!
+logging 148.4.101.1
+access-list 11 permit 148.4.29.213
+access-list 11 permit 148.4.29.209
+access-list 11 permit 148.4.101.1
+snmp-server community BK_cisco RO 11
+snmp-server community BK_cisco@es0 RO
+snmp-server location HS Building
+snmp-server contact Network Services ext. 1082
+tacacs-server host 148.4.252.2 key 7 011F57117B590D5E72
+tacacs-server host 148.4.172.2 key 7 011F57117B590D5E72
+tacacs-server directed-request
+!
+!
+line con 0
+ logging synchronous
+ login authentication CONSOLE
+line vty 0 4
+ password 7 097F59000D061F3F0E
+ logging synchronous
+ length 0
+line vty 5 15
+!
+ntp server 148.4.29.15
+ntp server 148.4.25.5
+end
+
+BK_HS_6FL#exit

@@ -1,0 +1,559 @@
+terminal length 0
+Bkl_Hoyt_6th#sh run | exclude clock-period
+Building configuration...
+
+Current configuration : 15602 bytes
+!
+version 12.2
+no service pad
+service timestamps debug uptime
+service timestamps log datetime localtime
+no service password-encryption
+!
+hostname Bkl_Hoyt_6th
+!
+enable secret 5 $1$8GeV$99c8UDvstA1SrzQHwCmyW/
+!
+username netadmin secret 5 $1$beK/$xopPrbPVLjoSyOKrZ9ZAt1
+aaa new-model
+aaa authentication login default group tacacs+ local
+aaa authentication login CONSOLE group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa authorization exec default group tacacs+ local 
+aaa authorization commands 0 default group tacacs+ local 
+aaa authorization commands 1 default group tacacs+ none 
+aaa authorization commands 4 default group tacacs+ local 
+aaa authorization commands 15 default group tacacs+ local 
+aaa accounting exec default start-stop group tacacs+
+aaa accounting commands 1 default start-stop group tacacs+
+aaa accounting commands 15 default start-stop group tacacs+
+!
+aaa session-id common
+clock timezone EST -5
+clock summer-time EDT recurring 1 Sun Apr 3:00 last Sun Oct 3:00
+switch 1 provision ws-c3750-48p
+ip subnet-zero
+!
+ip dhcp snooping vlan 300
+ip dhcp snooping
+!
+cluster commander-address 0019.5573.e400 member 4 name Hoyt_Dorm vlan 1
+!
+!
+no file verify auto
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+interface FastEthernet1/0/1
+ description Trunk-->Bkl_Hoyt_8th
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ ip dhcp snooping trust
+!
+interface FastEthernet1/0/2
+!
+interface FastEthernet1/0/3
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/4
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/5
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/6
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/7
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/8
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/9
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/10
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/11
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/12
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/13
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/14
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/15
+ description Slingo_Box
+ switchport access vlan 31
+ spanning-tree portfast
+!
+interface FastEthernet1/0/16
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/17
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/18
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/19
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/20
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/21
+ switchport access vlan 213
+ spanning-tree portfast
+!
+interface FastEthernet1/0/22
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/23
+ description RA_Office
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/24
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/25
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/26
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/27
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/28
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/29
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/30
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/31
+ switchport access vlan 215
+ spanning-tree portfast
+!
+interface FastEthernet1/0/32
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/33
+ description HOYT_CAM_47.177
+ switchport access vlan 215
+ spanning-tree portfast
+!
+interface FastEthernet1/0/34
+ description HOYT_CAM_47.179
+ switchport access vlan 215
+ spanning-tree portfast
+!
+interface FastEthernet1/0/35
+ description RA office
+ switchport access vlan 209
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/36
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/37
+ description AP_6th_Hoyt
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet1/0/38
+ description AP_6th_Hoyt
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet1/0/39
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/40
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/41
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/42
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/43
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/44
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/45
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/46
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface FastEthernet1/0/47
+ description Res_Life_Voice_7906
+ switchport voice vlan 653
+ spanning-tree portfast
+!
+interface FastEthernet1/0/48
+ switchport access vlan 300
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security aging time 15
+ switchport port-security violation restrict
+ storm-control broadcast level 30.00
+ spanning-tree portfast
+ ip dhcp snooping limit rate 20
+!
+interface GigabitEthernet1/0/1
+!
+interface GigabitEthernet1/0/2
+!
+interface GigabitEthernet1/0/3
+!
+interface GigabitEthernet1/0/4
+!
+interface Vlan1
+ ip address 148.4.101.76 255.255.255.0
+!
+ip default-gateway 148.4.101.66
+ip classless
+ip http server
+!
+logging 148.4.101.1
+access-list 11 permit 148.4.29.213
+access-list 11 permit 148.4.29.209
+access-list 11 permit 148.4.101.1
+snmp-server community BK_cisco RO 11
+snmp-server community BK_cisco@es4 RO
+snmp-server community BK_cisco@es0 RO
+snmp-server location 1Hoyt
+snmp-server contact Network Services ext. 1082
+snmp-server enable traps envmon
+snmp-server enable traps stpx root-inconsistency loop-inconsistency
+snmp-server enable traps syslog
+tacacs-server host 148.4.252.2
+tacacs-server host 148.4.172.2 key 7 011F57117B590D5E72
+tacacs-server directed-request
+tacacs-server key 7 011F57117B590D5E72
+tacacs-server administration
+radius-server source-ports 1645-1646
+!
+control-plane
+!
+!
+line con 0
+ logging synchronous
+ login authentication CONSOLE
+line vty 0 4
+ password 7 097F59000D061F3F0E
+ logging synchronous
+line vty 5 15
+!
+ntp server 148.4.25.5
+!
+end
+
+Bkl_Hoyt_6th#exit

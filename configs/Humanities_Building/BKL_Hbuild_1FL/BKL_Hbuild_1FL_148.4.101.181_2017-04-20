@@ -1,0 +1,285 @@
+terminal length 0
+BKL_Hbuild_1FL#sh run | exclude clock-period
+Building configuration...
+
+Current configuration : 7745 bytes
+!
+version 12.2
+no service pad
+service timestamps debug uptime
+service timestamps log uptime
+service password-encryption
+!
+hostname BKL_Hbuild_1FL
+!
+enable secret 5 $1$c1Jf$tIatgNaIKebPZl3pr9dE81
+!
+username netadmin secret 5 $1$beK/$xopPrbPVLjoSyOKrZ9ZAt1
+aaa new-model
+!
+!
+aaa authentication attempts login 5
+aaa authentication login default group tacacs+ local
+aaa authentication login CONSOLE group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa authorization exec default group tacacs+ local 
+aaa authorization commands 0 default group tacacs+ local 
+aaa authorization commands 1 default group tacacs+ none 
+aaa authorization commands 4 default group tacacs+ local 
+aaa authorization commands 15 default group tacacs+ local 
+aaa accounting exec default start-stop group tacacs+
+aaa accounting commands 1 default start-stop group tacacs+
+aaa accounting commands 15 default start-stop group tacacs+
+!
+!
+!
+aaa session-id common
+clock timezone EST -5
+clock summer-time EDT recurring
+errdisable recovery cause udld
+errdisable recovery cause bpduguard
+errdisable recovery cause security-violation
+errdisable recovery cause channel-misconfig
+errdisable recovery cause pagp-flap
+errdisable recovery cause dtp-flap
+errdisable recovery cause link-flap
+errdisable recovery cause gbic-invalid
+errdisable recovery cause l2ptguard
+errdisable recovery cause psecure-violation
+errdisable recovery cause dhcp-rate-limit
+errdisable recovery cause unicast-flood
+errdisable recovery cause vmps
+errdisable recovery cause loopback
+ip subnet-zero
+ip domain-name Bkl_Liunet.edu
+!
+!
+cluster commander-address 0016.c8e5.2803
+!
+crypto pki trustpoint TP-self-signed-702150784
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-702150784
+ revocation-check none
+ rsakeypair TP-self-signed-702150784
+!
+!
+crypto pki certificate chain TP-self-signed-702150784
+ certificate self-signed 01
+  30820253 308201BC A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  30312E30 2C060355 04031325 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 37303231 35303738 34301E17 0D393330 33303130 30303132 
+  365A170D 32303031 30313030 30303030 5A303031 2E302C06 03550403 1325494F 
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3730 32313530 
+  37383430 819F300D 06092A86 4886F70D 01010105 0003818D 00308189 02818100 
+  C0860A33 E983B374 7FE0462F 0DA035D9 E957DB0E 1A74D77A E118314D 0181C0A5 
+  EFCAB2F3 469B432A 7447365D DF092D48 9535F87C D41B4797 D633A26F B448F003 
+  B91A7178 B35B2119 7D40DCDC 62FAFB1A EAABB699 61B10A16 0A4ADF07 DD7AAC3D 
+  53695182 C1AC64A0 2939801A EAEFCC31 077CA158 83D06F3C DE137EDF C27B5BED 
+  02030100 01A37D30 7B300F06 03551D13 0101FF04 05300301 01FF3028 0603551D 
+  11042130 1F821D42 4B4C5F48 6275696C 645F3146 4C2E426B 6C5F4C69 756E6574 
+  2E656475 301F0603 551D2304 18301680 14A63FDA 959D9900 9B1DCB84 5F70F93A 
+  0D141C26 6A301D06 03551D0E 04160414 A63FDA95 9D99009B 1DCB845F 70F93A0D 
+  141C266A 300D0609 2A864886 F70D0101 04050003 8181008A A9C02575 A0C505C9 
+  25FCEB40 84B34228 9BC9B31A 2273CDC8 AC064AE7 2D48641E A67E33F4 5A0EF8EB 
+  DDF4E003 EC865594 5708625A BFA14813 5B16482F 2A3B120C 7E295AE0 2E226E8C 
+  F7AA89C4 AD8564F0 806A3A27 1D4C9B08 5A850CED F3B7653C F922EE4F CB385498 
+  258FFBA8 555B882B 5F6AEDD2 95759DC9 3DF3C4CD F02BC5
+  quit
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+! 
+!
+!
+!
+interface FastEthernet0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet0/2
+ description TicktBootch_Printer
+ switchport access vlan 30
+ switchport mode dynamic desirable
+ spanning-tree portfast
+!
+interface FastEthernet0/3
+ description Tickbooth_Printer
+ switchport access vlan 30
+ switchport mode dynamic desirable
+ spanning-tree portfast
+!
+interface FastEthernet0/4
+ switchport access vlan 30
+ switchport mode dynamic desirable
+ spanning-tree portfast
+!
+interface FastEthernet0/5
+ description H105_Data
+ switchport access vlan 220
+ switchport mode dynamic desirable
+ spanning-tree portfast
+!
+interface FastEthernet0/6
+ switchport mode dynamic desirable
+ spanning-tree portfast
+!
+interface FastEthernet0/7
+ description H106_Data
+ switchport access vlan 220
+ switchport mode dynamic desirable
+ spanning-tree portfast
+!
+interface FastEthernet0/8
+ description Kuble_Caffe
+ switchport access vlan 702
+ switchport mode access
+ switchport port-security
+ switchport port-security violation restrict
+ switchport port-security mac-address 00e0.0de4.cf79
+ spanning-tree portfast
+!
+interface FastEthernet0/9
+ switchport access vlan 47
+ switchport mode dynamic desirable
+ spanning-tree portfast
+!
+interface FastEthernet0/10
+ switchport access vlan 45
+ switchport mode dynamic desirable
+ spanning-tree portfast
+!
+interface FastEthernet0/11
+ switchport access vlan 30
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 30
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet0/12
+ switchport access vlan 213
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/13
+ switchport access vlan 30
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 30
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet0/14
+ switchport access vlan 30
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 30
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet0/15
+ description Box_office_Voice
+ switchport access vlan 30
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 30
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet0/16
+ switchport mode dynamic desirable
+ spanning-tree portfast
+!
+interface FastEthernet0/17
+ switchport access vlan 30
+ switchport mode dynamic desirable
+ spanning-tree portfast
+!
+interface FastEthernet0/18
+ switchport mode dynamic desirable
+ spanning-tree portfast
+!
+interface FastEthernet0/19
+ description Kumble_Printer
+ switchport access vlan 710
+ switchport mode dynamic desirable
+ spanning-tree portfast
+!
+interface FastEthernet0/20
+ switchport mode dynamic desirable
+ spanning-tree portfast
+!
+interface FastEthernet0/21
+ description TicketBooth
+ switchport access vlan 30
+ switchport mode dynamic desirable
+ spanning-tree portfast
+!
+interface FastEthernet0/22
+ description MDF4100
+ switchport access vlan 702
+ switchport mode dynamic desirable
+ spanning-tree portfast
+!
+interface FastEthernet0/23
+ description Trunk-->Basement
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet0/24
+ description AP_Gallery
+ switchport access vlan 104
+ switchport mode access
+!
+interface GigabitEthernet0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet0/2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Vlan1
+ ip address 148.4.101.181 255.255.255.0
+ no ip route-cache
+ no ip mroute-cache
+!
+ip default-gateway 148.4.101.66
+ip classless
+ip http server
+ip http secure-server
+!
+!
+logging 148.4.101.1
+access-list 11 permit 148.4.29.213
+access-list 11 permit 148.4.29.209
+access-list 11 permit 148.4.101.1
+snmp-server community BK_cisco RO 11
+snmp-server community BK_cisco@es0 RO
+snmp-server location H Building
+snmp-server contact Network Services ext. 1082
+tacacs-server host 148.4.172.2 key 7 011F57117B590D5E72
+tacacs-server host 148.4.252.2 timeout 20
+tacacs-server directed-request
+!
+control-plane
+!
+!
+line con 0
+ logging synchronous
+ login authentication CONSOLE
+line vty 0 4
+ password 7 097F59000D061F3F0E
+ logging synchronous
+line vty 5 15
+!
+ntp server 148.4.29.15
+ntp server 148.4.25.5
+end
+
+BKL_Hbuild_1FL#exit

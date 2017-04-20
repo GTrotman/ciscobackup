@@ -1,0 +1,229 @@
+terminal length 0
+Cyber_Caffe#sh run | exclude clock-period
+Building configuration...
+
+Current configuration : 5384 bytes
+!
+version 12.2
+no service pad
+service timestamps debug uptime
+service timestamps log datetime localtime
+service password-encryption
+!
+hostname Cyber_Caffe
+!
+enable secret 5 $1$P3XF$CTzn8BWKu46Pd2UQunm2M.
+!
+username netadmin secret 5 $1$beK/$xopPrbPVLjoSyOKrZ9ZAt1
+aaa new-model
+aaa authentication login default group tacacs+ local
+aaa authentication login CONSOLE group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa authorization exec default group tacacs+ local 
+aaa authorization commands 0 default group tacacs+ local 
+aaa authorization commands 1 default group tacacs+ none 
+aaa authorization commands 4 default group tacacs+ local 
+aaa authorization commands 15 default group tacacs+ local 
+aaa accounting exec default start-stop group tacacs+
+aaa accounting commands 1 default start-stop group tacacs+
+aaa accounting commands 15 default start-stop group tacacs+
+!
+aaa session-id common
+clock timezone EST -5
+clock summer-time EDT recurring
+switch 1 provision ws-c3750-24p
+ip subnet-zero
+ip domain-name liu.edu
+!
+!
+!
+!
+no file verify auto
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+interface FastEthernet1/0/1
+ description Uplink---->Pratt_Basement
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet1/0/2
+ description AP
+ switchport access vlan 104
+ spanning-tree portfast
+!
+interface FastEthernet1/0/3
+ description B_Subway_2_POS
+ switchport access vlan 702
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address 001a.d41d.238c
+ spanning-tree portfast
+!
+interface FastEthernet1/0/4
+ description B_Subway_1_POS
+ switchport access vlan 702
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address 001a.d41d.9369
+ spanning-tree portfast
+!
+interface FastEthernet1/0/5
+ description Quizno's Phone
+ switchport access vlan 209
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 209
+ switchport mode trunk
+ switchport voice vlan 631
+ spanning-tree portfast
+!
+interface FastEthernet1/0/6
+ description Quizno's Phone
+ switchport access vlan 209
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 209
+ switchport mode trunk
+ switchport voice vlan 631
+ spanning-tree portfast
+!
+interface FastEthernet1/0/7
+ description Browse_Brezeeway
+ switchport access vlan 702
+ spanning-tree portfast
+!
+interface FastEthernet1/0/8
+ switchport access vlan 710
+ spanning-tree portfast
+!
+interface FastEthernet1/0/9
+ switchport access vlan 710
+ spanning-tree portfast
+!
+interface FastEthernet1/0/10
+ description Jingus_Bar_SIS
+ switchport access vlan 45
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 45
+ switchport mode trunk
+ switchport voice vlan 631
+ spanning-tree portfast
+!
+interface FastEthernet1/0/11
+ description Jingus_Bar_Data
+ switchport access vlan 220
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 220
+ switchport mode trunk
+ switchport voice vlan 631
+ spanning-tree portfast
+!
+interface FastEthernet1/0/12
+ description Jingus_Bar_1_card
+ switchport access vlan 220
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 220
+ switchport mode trunk
+ switchport voice vlan 631
+ spanning-tree portfast
+!
+interface FastEthernet1/0/13
+ description Jingus_Bar_Cam#1
+ switchport access vlan 47
+ spanning-tree portfast
+!
+interface FastEthernet1/0/14
+ description Jingus_Bar_Cam#2
+ switchport access vlan 47
+ spanning-tree portfast
+!
+interface FastEthernet1/0/15
+ description Jingus_Bar_Cam#3(inside)
+ switchport access vlan 47
+ spanning-tree portfast
+!
+interface FastEthernet1/0/16
+ description Jingus_Bar_Data
+ switchport access vlan 230
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 220
+ switchport mode trunk
+ switchport voice vlan 631
+ spanning-tree portfast
+!
+interface FastEthernet1/0/17
+ description Quizno's_Credit_Card
+ switchport access vlan 249
+ spanning-tree portfast
+!
+interface FastEthernet1/0/18
+ description Digi_Sinage_TV
+ switchport access vlan 39
+!
+interface FastEthernet1/0/19
+ description AP_Breazeway
+ switchport access vlan 104
+!
+interface FastEthernet1/0/20
+ description Quizzno_Cam
+ switchport access vlan 47
+!
+interface FastEthernet1/0/21
+ description Quizzno_Cam
+ switchport access vlan 47
+!
+interface FastEthernet1/0/22
+ description RedMango_Credit_Card
+ switchport access vlan 249
+!
+interface FastEthernet1/0/23
+ description Aramark Kronos
+ power inline never
+ switchport access vlan 300
+ spanning-tree portfast
+!
+interface FastEthernet1/0/24
+ shutdown
+!
+interface GigabitEthernet1/0/1
+!
+interface GigabitEthernet1/0/2
+!
+interface Vlan1
+ ip address 148.4.101.209 255.255.255.0
+!
+ip default-gateway 148.4.101.66
+no ip classless
+no ip http server
+!
+!
+logging 148.4.101.1
+access-list 11 permit 148.4.29.209
+access-list 11 permit 148.4.101.1
+snmp-server community BK_cisco RO 11
+snmp-server community BK_cisco@es0 RO
+snmp-server location Pratt
+snmp-server contact Network Services ext. 1082
+snmp-server enable traps syslog
+tacacs-server host 148.4.252.2 key 7 011F57117B590D5E72
+tacacs-server directed-request
+radius-server source-ports 1645-1646
+!
+control-plane
+!
+!
+line con 0
+ logging synchronous
+ login authentication CONSOLE
+ stopbits 1
+line vty 0 4
+ password 7 0120110D4F080E2224
+line vty 5 15
+!
+ntp server 148.4.29.15
+ntp server 148.4.25.5
+end
+
+Cyber_Caffe#exit

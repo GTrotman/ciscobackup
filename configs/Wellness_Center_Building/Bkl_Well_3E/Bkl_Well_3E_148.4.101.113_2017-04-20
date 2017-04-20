@@ -1,0 +1,818 @@
+terminal length 0
+Bkl_Well_3E#sh run | exclude clock-period
+Building configuration...
+
+Current configuration : 20125 bytes
+!
+! Last configuration change at 17:47:01 UTC Sat Feb 11 2017 by garth
+! NVRAM config last updated at 20:07:48 UTC Wed Feb 1 2017 by flopez
+!
+version 12.2
+no service pad
+service timestamps debug uptime
+service timestamps log uptime
+service password-encryption
+service compress-config
+!
+hostname Bkl_Well_3E
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$1CcK$Kch.duzIZFmT7eiCX.V.l/
+!
+username netadmin password 7 05381106354F46241C
+aaa new-model
+aaa authentication login default group tacacs+ local
+aaa authentication login CONSOLE group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa authorization exec default group tacacs+ local 
+aaa authorization commands 0 default group tacacs+ local 
+aaa authorization commands 1 default group tacacs+ none 
+aaa authorization commands 4 default group tacacs+ local 
+aaa authorization commands 15 default group tacacs+ local 
+aaa accounting exec default start-stop group tacacs+
+aaa accounting commands 1 default start-stop group tacacs+
+aaa accounting commands 15 default start-stop group tacacs+
+!
+aaa session-id common
+ip subnet-zero
+!
+!
+no file verify auto
+spanning-tree mode pvst
+spanning-tree extend system-id
+power redundancy-mode redundant
+!
+!
+!
+vlan internal allocation policy ascending
+!
+interface GigabitEthernet1/1
+ description Trunk-->Bkl_Well_1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet1/2
+!
+interface GigabitEthernet2/1
+!
+interface GigabitEthernet2/2
+!
+interface GigabitEthernet2/3
+!
+interface GigabitEthernet2/4
+!
+interface GigabitEthernet2/5
+!
+interface GigabitEthernet2/6
+!
+interface FastEthernet3/1
+ description Well_328A
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/2
+ description Well_324A
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/3
+ description Well_332A
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/4
+ description Well_326A
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/5
+ description Well_334C
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/6
+ description Well_330C
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/7
+ description Well_306A
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/8
+ description Well_335A
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/9
+ description Well_422C
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/10
+ description Well_307A
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/11
+ description Well_425A
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/12
+ description Well_425G
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/13
+ description Well_425C
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/14
+ description B.Cohen
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/15
+ description Well_429C
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/16
+ description Well_428C
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/17
+ description Well_337C
+ switchport access vlan 710
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 710
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/18
+ description Well_426B
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/19
+ description Well_327D
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/20
+ description Well_338A
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/21
+ description Well_338B
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/22
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/23
+ description AP_WC_3rd_N
+ switchport access vlan 104
+ power inline never
+!
+interface FastEthernet3/24
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/25
+ switchport access vlan 29
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 29
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/26
+ description Canon_Printer
+ switchport access vlan 710
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet3/27
+ description Well_426D
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/28
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/29
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/30
+ description Well_426_T2
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/31
+ description Well_309A
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/32
+ description Well_430C
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/33
+ description Well_431C
+ switchport access vlan 104
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/34
+ description Well_433C
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/35
+ description Well_434A
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/36
+ description Well_423C
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/37
+ description Well_424E
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/38
+ description Well_420A
+ switchport access vlan 29
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 29
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/39
+ description Well_423G
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/40
+ description Well_432C
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/41
+ description Well_423A
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/42
+ description Well_320A
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/43
+ description Well_308A
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/44
+ description Well_310A
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/45
+ description Well_323A
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/46
+ description Well_321C
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/47
+ description Well_325C
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet3/48
+ description Well_327A
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet4/1
+ description Cam_47.93
+ switchport access vlan 47
+!
+interface FastEthernet4/2
+ description Cam_47.86
+ switchport access vlan 47
+!
+interface FastEthernet4/3
+ description Cam_47.92
+ switchport access vlan 47
+!
+interface FastEthernet4/4
+ description Cam_47.87
+ switchport access vlan 47
+!
+interface FastEthernet4/5
+ description Cam_47.88
+ switchport access vlan 47
+!
+interface FastEthernet4/6
+ description Cam_47.89
+ switchport access vlan 47
+!
+interface FastEthernet4/7
+ switchport access vlan 47
+!
+interface FastEthernet4/8
+ description Cam_47.70
+ switchport access vlan 47
+!
+interface FastEthernet4/9
+ description Cam_47.73
+ switchport access vlan 47
+!
+interface FastEthernet4/10
+ description Cam_47.71
+ switchport access vlan 47
+!
+interface FastEthernet4/11
+ switchport access vlan 47
+!
+interface FastEthernet4/12
+ description Cam_47.72
+ switchport access vlan 47
+!
+interface FastEthernet4/13
+ switchport access vlan 47
+!
+interface FastEthernet4/14
+ description Well_335A_Voice
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet4/15
+ description Asland_Lobby_Voice
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet4/16
+ description 4thFloor Kitchen Printer
+ switchport access vlan 710
+!
+interface FastEthernet4/17
+ description 322B_Data
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+!
+interface FastEthernet4/18
+ description Outside Soccer Office
+ switchport access vlan 220
+!
+interface FastEthernet4/19
+ description 305B_Data
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+!
+interface FastEthernet4/20
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+!
+interface FastEthernet4/21
+ description 331A_Data
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+!
+interface FastEthernet4/22
+ description Outside Soccer Office
+ switchport access vlan 220
+!
+interface FastEthernet4/23
+ description AP_WC_4th_N
+ switchport access vlan 104
+ power inline never
+!
+interface FastEthernet4/24
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+!
+interface FastEthernet4/25
+ switchport access vlan 47
+ shutdown
+!
+interface FastEthernet4/26
+ description 5floor_Fred_Foran
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet4/27
+ description 5floor_Fred_Foran
+ switchport access vlan 47
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet4/28
+ description 5floor_Fred_Foran
+ switchport access vlan 47
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet4/29
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+!
+interface FastEthernet4/30
+ description Uplink--->ScabSwitch
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet4/31
+ description Ticket_Bouth
+ switchport access vlan 770
+ spanning-tree portfast
+!
+interface FastEthernet4/32
+ description Ticket_Bouth
+ switchport access vlan 770
+ spanning-tree portfast
+!
+interface FastEthernet4/33
+ description Ticket_Bouth
+ switchport access vlan 770
+ spanning-tree portfast
+!
+interface FastEthernet4/34
+ description Ticket_Bouth
+ switchport access vlan 770
+ spanning-tree portfast
+!
+interface FastEthernet4/35
+ switchport access vlan 47
+ shutdown
+!
+interface FastEthernet4/36
+ switchport access vlan 47
+ shutdown
+!
+interface FastEthernet4/37
+ description Well_328B_Data
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+!
+interface FastEthernet4/38
+ description Cam_47.96
+ switchport access vlan 47
+!
+interface FastEthernet4/39
+ description Cam_47.97
+ switchport access vlan 47
+!
+interface FastEthernet4/40
+ description Cam_47.100
+ switchport access vlan 47
+!
+interface FastEthernet4/41
+ description Cam_47.101
+ switchport access vlan 47
+!
+interface FastEthernet4/42
+ description Cam_47.104
+ switchport access vlan 47
+!
+interface FastEthernet4/43
+ description Cam_47.103
+ switchport access vlan 47
+!
+interface FastEthernet4/44
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet4/45
+ description 4th_floor 
+ switchport access vlan 702
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode access
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet4/46
+ switchport access vlan 38
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 38
+ switchport mode trunk
+ switchport voice vlan 636
+ spanning-tree portfast
+!
+interface FastEthernet4/47
+ description AP_WC_WRAC
+ switchport access vlan 104
+!
+interface FastEthernet4/48
+ description Well_408F_Data_PolyComm
+ switchport access vlan 636
+ switchport mode access
+ switchport port-security
+ switchport port-security violation restrict
+ switchport port-security mac-address 0004.f2f9.6f29
+ spanning-tree portfast
+!
+interface Vlan1
+ ip address 148.4.101.113 255.255.255.0
+!
+ip default-gateway 148.4.101.66
+ip route 0.0.0.0 0.0.0.0 148.4.101.66
+no ip http server
+!
+!
+access-list 11 permit 148.4.29.213
+access-list 11 permit 148.4.29.209
+access-list 11 permit 148.4.101.1
+!
+snmp-server community BK_cisco RO 11
+snmp-server location Wellness Center
+snmp-server contact Network Services ext. 1082
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+snmp-server enable traps tty
+snmp-server enable traps vtp
+snmp-server enable traps vlancreate
+snmp-server enable traps vlandelete
+snmp-server enable traps stpx
+snmp-server enable traps rf
+snmp-server enable traps port-security
+snmp-server enable traps config
+snmp-server enable traps entity
+snmp-server enable traps cpu threshold
+snmp-server enable traps copy-config
+snmp-server enable traps fru-ctrl
+snmp-server enable traps flash insertion removal
+snmp-server enable traps syslog
+snmp-server enable traps bridge
+snmp-server enable traps envmon
+snmp-server enable traps hsrp
+snmp-server enable traps bgp
+snmp-server enable traps ospf state-change
+snmp-server enable traps ospf errors
+snmp-server enable traps ospf retransmit
+snmp-server enable traps ospf lsa
+snmp-server enable traps ospf cisco-specific state-change
+snmp-server enable traps ospf cisco-specific errors
+snmp-server enable traps ospf cisco-specific retransmit
+snmp-server enable traps ospf cisco-specific lsa
+snmp-server enable traps pim neighbor-change rp-mapping-change invalid-pim-message
+snmp-server enable traps ipmulticast
+snmp-server enable traps msdp
+snmp-server enable traps rtr
+snmp-server enable traps vlan-membership
+tacacs-server host 148.4.252.2 key 7 011F57117B590D5E72
+tacacs-server host 148.4.172.2 key 7 011F57117B590D5E72
+tacacs-server directed-request
+!
+radius-server source-ports 1645-1646
+!
+line con 0
+ logging synchronous
+ login authentication CONSOLE
+ stopbits 1
+line vty 0 4
+ password 7 1125480B020A3D1414
+!
+mac-address-table static 001e.33fd.7ca2 vlan 38 drop
+ntp server 148.4.5.25
+!
+end
+
+Bkl_Well_3E#exit

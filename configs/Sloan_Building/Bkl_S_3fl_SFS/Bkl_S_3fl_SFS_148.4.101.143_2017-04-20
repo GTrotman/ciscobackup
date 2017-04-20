@@ -1,0 +1,919 @@
+terminal length 0
+Bkl_S_3fl_SFS#sh run | exclude clock-period
+Building configuration...
+
+Current configuration : 22677 bytes
+!
+! Last configuration change at 16:16:05 EST Thu Mar 2 2017 by flopez
+! NVRAM config last updated at 16:16:18 EST Thu Mar 2 2017 by flopez
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec localtime
+no service password-encryption
+!
+hostname Bkl_S_3fl_SFS
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$KAez$Fx7qH0u2FsLKS/nrdXgAl/
+!
+username netadmin secret 5 $1$beK/$xopPrbPVLjoSyOKrZ9ZAt1
+!
+!
+aaa new-model
+!
+!
+aaa authentication login default group tacacs+ local
+aaa authentication login CONSOLE group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa authorization exec default group tacacs+ local 
+aaa authorization commands 0 default group tacacs+ local 
+aaa authorization commands 1 default group tacacs+ none 
+aaa authorization commands 4 default group tacacs+ local 
+aaa authorization commands 15 default group tacacs+ local 
+aaa accounting exec default start-stop group tacacs+
+aaa accounting commands 1 default start-stop group tacacs+
+aaa accounting commands 15 default start-stop group tacacs+
+!
+!
+!
+aaa session-id common
+clock timezone EST -5
+clock summer-time EDT recurring
+switch 1 provision ws-c3750-48p
+switch 2 provision ws-c3750-48p
+switch 3 provision ws-c3750-48p
+system mtu routing 1500
+ip domain-name Bkl_Liunet.liu.edu
+!
+!
+!
+mls qos map policed-dscp  0 10 18 24 46 to 8
+mls qos map cos-dscp 0 8 16 24 32 46 48 56
+mls qos srr-queue input bandwidth 70 30
+mls qos srr-queue input threshold 1 80 90
+mls qos srr-queue input priority-queue 2 bandwidth 30
+mls qos srr-queue input cos-map queue 1 threshold 2 3
+mls qos srr-queue input cos-map queue 1 threshold 3 6 7
+mls qos srr-queue input cos-map queue 2 threshold 1 4
+mls qos srr-queue input dscp-map queue 1 threshold 2 24
+mls qos srr-queue input dscp-map queue 1 threshold 3 48 49 50 51 52 53 54 55
+mls qos srr-queue input dscp-map queue 1 threshold 3 56 57 58 59 60 61 62 63
+mls qos srr-queue input dscp-map queue 2 threshold 3 32 33 40 41 42 43 44 45
+mls qos srr-queue input dscp-map queue 2 threshold 3 46 47
+mls qos srr-queue output cos-map queue 1 threshold 3 4 5
+mls qos srr-queue output cos-map queue 2 threshold 1 2
+mls qos srr-queue output cos-map queue 2 threshold 2 3
+mls qos srr-queue output cos-map queue 2 threshold 3 6 7
+mls qos srr-queue output cos-map queue 3 threshold 3 0
+mls qos srr-queue output cos-map queue 4 threshold 3 1
+mls qos srr-queue output dscp-map queue 1 threshold 3 32 33 40 41 42 43 44 45
+mls qos srr-queue output dscp-map queue 1 threshold 3 46 47
+mls qos srr-queue output dscp-map queue 2 threshold 1 16 17 18 19 20 21 22 23
+mls qos srr-queue output dscp-map queue 2 threshold 1 26 27 28 29 30 31 34 35
+mls qos srr-queue output dscp-map queue 2 threshold 1 36 37 38 39
+mls qos srr-queue output dscp-map queue 2 threshold 2 24
+mls qos srr-queue output dscp-map queue 2 threshold 3 48 49 50 51 52 53 54 55
+mls qos srr-queue output dscp-map queue 2 threshold 3 56 57 58 59 60 61 62 63
+mls qos srr-queue output dscp-map queue 3 threshold 3 0 1 2 3 4 5 6 7
+mls qos srr-queue output dscp-map queue 4 threshold 1 8 9 11 13 15
+mls qos srr-queue output dscp-map queue 4 threshold 2 10 12 14
+mls qos queue-set output 1 threshold 1 100 100 50 200
+mls qos queue-set output 1 threshold 2 125 125 100 400
+mls qos queue-set output 1 threshold 3 100 100 100 400
+mls qos queue-set output 1 threshold 4 60 150 50 200
+mls qos queue-set output 1 buffers 15 25 40 20
+mls qos
+!
+crypto pki trustpoint TP-self-signed-3617783040
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3617783040
+ revocation-check none
+ rsakeypair TP-self-signed-3617783040
+!
+!
+crypto pki certificate chain TP-self-signed-3617783040
+ certificate self-signed 01
+  30820246 308201AF A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 33363137 37383330 3430301E 170D3933 30333031 30303034 
+  30315A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D33 36313737 
+  38333034 3030819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100C676 C97390C1 20CEAC5A 8EED4111 724CDA76 4E5F7F16 60BFB3CA 0E0C9370 
+  161CA250 545690B8 26EB3074 46E24A76 6E2050C9 9311AAA9 A7E4DD7A C60176B7 
+  789978EE CF9DC1EA 2D6BF9B7 4B54AC16 C7C11503 1DBFE600 5AAC7A80 E0F43F1F 
+  2D78EDCE D960C4F8 F5839B08 AAC2FFB7 61F576BA 2328F3A2 03AA6AB8 564E11DE 
+  E0EB0203 010001A3 6E306C30 0F060355 1D130101 FF040530 030101FF 30190603 
+  551D1104 12301082 0E426B6C 5F535F33 666C5F53 46532E30 1F060355 1D230418 
+  30168014 F2A79FE2 8AC13A06 10496FBB 557A0DEA F3943DF2 301D0603 551D0E04 
+  160414F2 A79FE28A C13A0610 496FBB55 7A0DEAF3 943DF230 0D06092A 864886F7 
+  0D010104 05000381 8100628E 82B7C9D7 12AC9D35 E22D40D2 6FA496A4 0BB45B7F 
+  A5CE914E 99148352 5424F42A DEEAAF1E F0A14EF4 E5394FB9 0A08CC87 24CC0671 
+  54ADEA58 8AA4430D 9E4FDA73 E461A662 55E49B17 51D1E633 889185A2 2A29B273 
+  B2CC0666 23AE5750 23E19945 3DF9762F 85306F2D AC53AE84 CAEE1CEB 9AAC0DB5 
+  E32D0DBC DD65D5DD 0597
+  quit
+auto qos srnd4
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+no spanning-tree vlan 186,202,209,223-224,227-230,236,245,247,249-252,254,306
+no spanning-tree vlan 307-308,900
+!
+vlan internal allocation policy ascending
+!
+!
+class-map match-all AUTOQOS_VOIP_DATA_CLASS
+ match ip dscp ef 
+class-map match-all AUTOQOS_DEFAULT_CLASS
+ match access-group name AUTOQOS-ACL-DEFAULT
+class-map match-all AUTOQOS_VOIP_SIGNAL_CLASS
+ match ip dscp cs3 
+!
+!
+policy-map AUTOQOS-SRND4-CISCOPHONE-POLICY
+ class AUTOQOS_VOIP_DATA_CLASS
+  set dscp ef
+  police 128000 8000 exceed-action policed-dscp-transmit
+ class AUTOQOS_VOIP_SIGNAL_CLASS
+  set dscp cs3
+  police 32000 8000 exceed-action policed-dscp-transmit
+ class AUTOQOS_DEFAULT_CLASS
+  set dscp default
+  police 10000000 8000 exceed-action policed-dscp-transmit
+!
+!
+!
+!
+interface FastEthernet1/0/1
+ description Uplink----->
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet1/0/2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet1/0/3
+ switchport access vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/4
+ switchport access vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/5
+ switchport access vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/6
+ description HR_Printer
+ switchport access vlan 710
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/7
+ switchport access vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/8
+ switchport access vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/9
+ switchport access vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/10
+ switchport access vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/11
+ switchport access vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/12
+ switchport access vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/13
+ switchport access vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/14
+ switchport access vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/15
+ switchport access vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/16
+ switchport access vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/17
+ description Ameeta_PC
+ switchport access vlan 39
+ switchport mode access
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/18
+ description AP
+ switchport access vlan 104
+!
+interface FastEthernet1/0/19
+ switchport access vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/20
+ description ScheduleTV
+ switchport access vlan 39
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/21
+ description Chappel_TV
+ switchport access vlan 39
+ spanning-tree portfast
+!
+interface FastEthernet1/0/22
+ description SFS_HR
+ switchport access vlan 202
+ switchport mode access
+ switchport voice vlan 610
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ srr-queue bandwidth share 1 30 35 5
+ priority-queue out 
+ mls qos trust device cisco-phone
+ mls qos trust cos
+ auto qos voip cisco-phone 
+ macro description cisco-phone
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy input AUTOQOS-SRND4-CISCOPHONE-POLICY
+!
+interface FastEthernet1/0/23
+ description Eric_Jean_Spare_data
+ switchport access vlan 39
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet1/0/24
+ description Campus_Life_TV
+ switchport access vlan 39
+ spanning-tree portfast
+!
+interface FastEthernet1/0/25
+!
+interface FastEthernet1/0/26
+!
+interface FastEthernet1/0/27
+!
+interface FastEthernet1/0/28
+!
+interface FastEthernet1/0/29
+!
+interface FastEthernet1/0/30
+!
+interface FastEthernet1/0/31
+ description S_301_Parking_PC
+ switchport access vlan 701
+ switchport mode access
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security violation restrict
+ switchport port-security mac-address 0021.7006.131e vlan access
+ spanning-tree portfast
+!
+interface FastEthernet1/0/32
+ description S301_Prjector
+ switchport access vlan 251
+ spanning-tree portfast
+!
+interface FastEthernet1/0/33
+ description IPCAM
+ switchport access vlan 47
+ spanning-tree portfast
+!
+interface FastEthernet1/0/34
+ description IPCAM
+ switchport access vlan 47
+!
+interface FastEthernet1/0/35
+ description IPCAM
+ switchport access vlan 47
+ spanning-tree portfast
+!
+interface FastEthernet1/0/36
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/37
+!
+interface FastEthernet1/0/38
+!
+interface FastEthernet1/0/39
+!
+interface FastEthernet1/0/40
+!
+interface FastEthernet1/0/41
+!
+interface FastEthernet1/0/42
+!
+interface FastEthernet1/0/43
+!
+interface FastEthernet1/0/44
+!
+interface FastEthernet1/0/45
+ description AP
+ switchport access vlan 105
+!
+interface FastEthernet1/0/46
+ description IPCAM
+ switchport access vlan 47
+ spanning-tree portfast
+!
+interface FastEthernet1/0/47
+ description AP
+ switchport access vlan 104
+!
+interface FastEthernet1/0/48
+ description AP
+ switchport access vlan 104
+!
+interface GigabitEthernet1/0/1
+ description UPlink--->M65K_Core
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/2
+!
+interface GigabitEthernet1/0/3
+!
+interface GigabitEthernet1/0/4
+!
+interface FastEthernet2/0/1
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/2
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/3
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/4
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/5
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/6
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/7
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/8
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/9
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/10
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/11
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/12
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/13
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/14
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/15
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/16
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/17
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/18
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/19
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/20
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/21
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/22
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/23
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/24
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/25
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/26
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/27
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/28
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/29
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/30
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/31
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/32
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/33
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/34
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/35
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/36
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/37
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/38
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/39
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/40
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/41
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/42
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/43
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/44
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/45
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/46
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/47
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet2/0/48
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/1
+!
+interface GigabitEthernet2/0/2
+!
+interface GigabitEthernet2/0/3
+!
+interface GigabitEthernet2/0/4
+!
+interface FastEthernet3/0/1
+ description SFS_Transact
+ switchport access vlan 701
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address 0021.9b6b.f478 vlan access
+ no cdp enable
+ spanning-tree portfast
+!
+interface FastEthernet3/0/2
+ description SFS Kiosk
+ switchport access vlan 214
+ spanning-tree portfast
+!
+interface FastEthernet3/0/3
+ description SFS Kiosk
+ switchport access vlan 214
+ spanning-tree portfast
+!
+interface FastEthernet3/0/4
+ description SFS Kiosk
+ switchport access vlan 214
+ spanning-tree portfast
+!
+interface FastEthernet3/0/5
+ description SFS Kiosk
+ switchport access vlan 214
+ spanning-tree portfast
+!
+interface FastEthernet3/0/6
+ description SFS Kiosk
+ switchport access vlan 214
+ spanning-tree portfast
+!
+interface FastEthernet3/0/7
+ description SFS Kiosk
+ switchport access vlan 214
+ spanning-tree portfast
+!
+interface FastEthernet3/0/8
+ description SFS Kiosk
+ switchport access vlan 214
+ spanning-tree portfast
+!
+interface FastEthernet3/0/9
+ description SFS Kiosk
+ switchport access vlan 214
+ spanning-tree portfast
+!
+interface FastEthernet3/0/10
+ description SFS Kiosk
+ switchport access vlan 214
+ spanning-tree portfast
+!
+interface FastEthernet3/0/11
+ description SFS Kiosk
+ switchport access vlan 214
+ spanning-tree portfast
+!
+interface FastEthernet3/0/12
+!
+interface FastEthernet3/0/13
+!
+interface FastEthernet3/0/14
+!
+interface FastEthernet3/0/15
+!
+interface FastEthernet3/0/16
+!
+interface FastEthernet3/0/17
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/18
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/19
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/20
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/21
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/22
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/23
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/24
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/25
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/26
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/27
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/28
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/29
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/30
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/31
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/32
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/33
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/34
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/35
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/36
+ description Enroll_Printer
+ switchport access vlan 710
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/37
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/38
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/39
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/40
+ description Reg_Printer
+ switchport access vlan 710
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/41
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/42
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/43
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/44
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/45
+ switchport access vlan 202
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet3/0/46
+ description Financial_Aid_CC
+ switchport access vlan 209
+ spanning-tree portfast
+!
+interface FastEthernet3/0/47
+ description Financial_Aid_CC
+ switchport access vlan 209
+ spanning-tree portfast
+!
+interface FastEthernet3/0/48
+ description Financial_Aid_CC
+ switchport access vlan 209
+ spanning-tree portfast
+!
+interface GigabitEthernet3/0/1
+!
+interface GigabitEthernet3/0/2
+!
+interface GigabitEthernet3/0/3
+!
+interface GigabitEthernet3/0/4
+!
+interface Vlan1
+ ip address 148.4.101.143 255.255.255.0
+!
+ip classless
+ip http server
+ip http secure-server
+!
+!
+ip access-list extended AUTOQOS-ACL-DEFAULT
+ permit ip any any
+!
+logging 148.4.101.1
+access-list 11 permit 148.4.29.213
+access-list 11 permit 148.4.29.209
+access-list 11 permit 148.4.101.1
+!
+snmp-server engineID local 0000000902000009B7F382C0
+snmp-server community BK_cisco RO 11
+snmp-server community BK_cisco@es0 RO
+snmp-server location S Building
+snmp-server contact Network Services ext. 1082
+snmp-server enable traps license
+tacacs-server host 148.4.252.2
+tacacs-server directed-request
+tacacs-server key 7 011F57117B590D5E72
+!
+!
+line con 0
+ logging synchronous
+ login authentication CONSOLE
+ stopbits 1
+line vty 0 4
+ password 7 0120110D4F080E2224
+line vty 5 15
+ password 7 06351828584D013400
+!
+!
+monitor session 1 source interface Fa1/0/1
+monitor session 1 destination interface Fa1/0/2
+ntp server 148.4.29.15
+ntp server 148.4.25.5
+end
+
+Bkl_S_3fl_SFS#exit

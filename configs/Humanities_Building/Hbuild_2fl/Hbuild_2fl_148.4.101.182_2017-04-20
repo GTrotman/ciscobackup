@@ -1,0 +1,420 @@
+terminal length 0
+Hbuild_2fl#sh run | exclude clock-period
+Building configuration...
+
+Current configuration : 11988 bytes
+!
+version 12.2
+no service pad
+service timestamps debug uptime
+service timestamps log datetime localtime
+service password-encryption
+!
+hostname Hbuild_2fl
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$fo4r$LV19TVRw/t2zHUPVXuPEH.
+!
+username netadmin password 7 05381106354F46241C
+!
+!
+aaa new-model
+!
+!
+aaa authentication login default group tacacs+ local
+aaa authentication login CONSOLE group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa authorization exec default group tacacs+ local 
+aaa authorization commands 0 default group tacacs+ local 
+aaa authorization commands 1 default group tacacs+ none 
+aaa authorization commands 4 default group tacacs+ local 
+aaa authorization commands 15 default group tacacs+ local 
+aaa accounting exec default start-stop group tacacs+
+aaa accounting commands 1 default start-stop group tacacs+
+aaa accounting commands 15 default start-stop group tacacs+
+!
+!
+!
+aaa session-id common
+clock timezone EST -5
+clock summer-time EDT recurring
+switch 1 provision ws-c3750-48p
+system mtu routing 1504
+ip domain-name liu.edu
+!
+!
+cluster enable Hbuild_2fl_POE 0
+cluster member 1 mac-address 0009.b7f3.8480
+cluster member 2 mac-address 0008.2150.4080
+!
+mls qos map policed-dscp  0 10 18 24 46 to 8
+mls qos map cos-dscp 0 8 16 24 32 46 48 56
+mls qos srr-queue input bandwidth 70 30
+mls qos srr-queue input threshold 1 80 90
+mls qos srr-queue input priority-queue 2 bandwidth 30
+mls qos srr-queue input cos-map queue 1 threshold 2 3
+mls qos srr-queue input cos-map queue 1 threshold 3 6 7
+mls qos srr-queue input cos-map queue 2 threshold 1 4
+mls qos srr-queue input dscp-map queue 1 threshold 2 24
+mls qos srr-queue input dscp-map queue 1 threshold 3 48 49 50 51 52 53 54 55
+mls qos srr-queue input dscp-map queue 1 threshold 3 56 57 58 59 60 61 62 63
+mls qos srr-queue input dscp-map queue 2 threshold 3 32 33 40 41 42 43 44 45
+mls qos srr-queue input dscp-map queue 2 threshold 3 46 47
+mls qos srr-queue output cos-map queue 1 threshold 3 4 5
+mls qos srr-queue output cos-map queue 2 threshold 1 2
+mls qos srr-queue output cos-map queue 2 threshold 2 3
+mls qos srr-queue output cos-map queue 2 threshold 3 6 7
+mls qos srr-queue output cos-map queue 3 threshold 3 0
+mls qos srr-queue output cos-map queue 4 threshold 3 1
+mls qos srr-queue output dscp-map queue 1 threshold 3 32 33 40 41 42 43 44 45
+mls qos srr-queue output dscp-map queue 1 threshold 3 46 47
+mls qos srr-queue output dscp-map queue 2 threshold 1 16 17 18 19 20 21 22 23
+mls qos srr-queue output dscp-map queue 2 threshold 1 26 27 28 29 30 31 34 35
+mls qos srr-queue output dscp-map queue 2 threshold 1 36 37 38 39
+mls qos srr-queue output dscp-map queue 2 threshold 2 24
+mls qos srr-queue output dscp-map queue 2 threshold 3 48 49 50 51 52 53 54 55
+mls qos srr-queue output dscp-map queue 2 threshold 3 56 57 58 59 60 61 62 63
+mls qos srr-queue output dscp-map queue 3 threshold 3 0 1 2 3 4 5 6 7
+mls qos srr-queue output dscp-map queue 4 threshold 1 8 9 11 13 15
+mls qos srr-queue output dscp-map queue 4 threshold 2 10 12 14
+mls qos queue-set output 1 threshold 1 100 100 50 200
+mls qos queue-set output 1 threshold 2 125 125 100 400
+mls qos queue-set output 1 threshold 3 100 100 100 400
+mls qos queue-set output 1 threshold 4 60 150 50 200
+mls qos queue-set output 1 buffers 15 25 40 20
+mls qos
+!
+crypto pki trustpoint TP-self-signed-2042463488
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2042463488
+ revocation-check none
+ rsakeypair TP-self-signed-2042463488
+!
+!
+crypto pki certificate chain TP-self-signed-2042463488
+ certificate self-signed 01
+  30820243 308201AC A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 32303432 34363334 3838301E 170D3933 30333031 30303031 
+  35315A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D32 30343234 
+  36333438 3830819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100ADE3 75E39013 A955C51D 32E1F717 C05C03D2 FD30C46E 9F5DD0D0 F171AA69 
+  2C9E556D B721C2C3 9EBA1626 AB141D18 91E8F3E3 D1A1B0F3 78B975C5 B420F344 
+  78C9E519 89D6B2E5 05A27FC9 10919B14 3A827252 7D3462DD 20642406 89A95F97 
+  3636A7A8 2F4E40D4 702301BB 64EA8897 8C59B0BD BC7E94CE 6794A1DE 847764C4 
+  A9970203 010001A3 6B306930 0F060355 1D130101 FF040530 030101FF 30160603 
+  551D1104 0F300D82 0B486275 696C645F 32666C2E 301F0603 551D2304 18301680 
+  14314DD3 6DC594FF 1B53EF63 706F14D7 A887FB95 E2301D06 03551D0E 04160414 
+  314DD36D C594FF1B 53EF6370 6F14D7A8 87FB95E2 300D0609 2A864886 F70D0101 
+  04050003 8181005E C0F953C0 90A99D45 8E1826BC C1C01B1B A0353F08 11A40AD3 
+  692C1237 ABE61AB4 F4CAA2D3 FF761106 1B6C91EF 1EAF11A0 BCE79478 0F73E01C 
+  4BB6EF97 3EA7D79C 3B48AE95 50DF794A 6EBAE88C E5A0DF19 E0A80722 AF51EBEE 
+  0153C0EE CF6DD885 4DFA87B1 4B9A4036 AD50DA36 570386AE 9225986F 739024F2 
+  31C8270C 894F39
+  quit
+auto qos srnd4
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+class-map match-all AUTOQOS_VOIP_DATA_CLASS
+ match ip dscp ef 
+class-map match-all AUTOQOS_DEFAULT_CLASS
+ match access-group name AUTOQOS-ACL-DEFAULT
+class-map match-all AUTOQOS_VOIP_SIGNAL_CLASS
+ match ip dscp cs3 
+!
+!
+policy-map AUTOQOS-SRND4-CISCOPHONE-POLICY
+ class AUTOQOS_VOIP_DATA_CLASS
+  set dscp ef
+  police 128000 8000 exceed-action policed-dscp-transmit
+ class AUTOQOS_VOIP_SIGNAL_CLASS
+  set dscp cs3
+  police 32000 8000 exceed-action policed-dscp-transmit
+ class AUTOQOS_DEFAULT_CLASS
+  set dscp default
+  police 10000000 8000 exceed-action policed-dscp-transmit
+!
+!
+!
+interface FastEthernet1/0/1
+ description Uplink 6000---->
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet1/0/2
+ description Uplink----slave
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet1/0/3
+ description Uplik----->H215B
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet1/0/4
+ description Writing Center Admin
+ switchport access vlan 30
+ switchport voice vlan 633
+ spanning-tree portfast
+!
+interface FastEthernet1/0/5
+ description Writing Center Admin
+ switchport access vlan 30
+ switchport voice vlan 633
+ spanning-tree portfast
+!
+interface FastEthernet1/0/6
+ switchport access vlan 220
+ switchport voice vlan 630
+ spanning-tree portfast
+!
+interface FastEthernet1/0/7
+ switchport access vlan 220
+ switchport voice vlan 630
+ spanning-tree portfast
+!
+interface FastEthernet1/0/8
+ switchport access vlan 220
+ switchport voice vlan 630
+ spanning-tree portfast
+!
+interface FastEthernet1/0/9
+ switchport access vlan 220
+ switchport voice vlan 630
+ spanning-tree portfast
+!
+interface FastEthernet1/0/10
+ switchport access vlan 220
+ switchport voice vlan 630
+ spanning-tree portfast
+!
+interface FastEthernet1/0/11
+ switchport access vlan 220
+ switchport voice vlan 630
+ spanning-tree portfast
+!
+interface FastEthernet1/0/12
+ description H_203_AP
+ switchport access vlan 104
+!
+interface FastEthernet1/0/13
+ description AP_H_EC
+ switchport access vlan 104
+!
+interface FastEthernet1/0/14
+ switchport access vlan 104
+!
+interface FastEthernet1/0/15
+ description AP_Closet
+ switchport access vlan 104
+!
+interface FastEthernet1/0/16
+ switchport access vlan 220
+ switchport voice vlan 630
+ spanning-tree portfast
+!
+interface FastEthernet1/0/17
+ switchport access vlan 220
+ switchport voice vlan 630
+ spanning-tree portfast
+!
+interface FastEthernet1/0/18
+ switchport access vlan 220
+ switchport voice vlan 630
+ spanning-tree portfast
+!
+interface FastEthernet1/0/19
+ description Grind_BB_T_Station
+ switchport access vlan 701
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address c81f.66a8.f80b vlan access
+ spanning-tree portfast
+!
+interface FastEthernet1/0/20
+ switchport access vlan 220
+ switchport voice vlan 630
+ spanning-tree portfast
+!
+interface FastEthernet1/0/21
+ switchport access vlan 47
+ spanning-tree portfast
+!
+interface FastEthernet1/0/22
+ switchport access vlan 47
+ spanning-tree portfast
+!
+interface FastEthernet1/0/23
+ switchport access vlan 47
+ spanning-tree portfast
+!
+interface FastEthernet1/0/24
+ switchport access vlan 47
+ spanning-tree portfast
+!
+interface FastEthernet1/0/25
+!
+interface FastEthernet1/0/26
+!
+interface FastEthernet1/0/27
+ switchport access vlan 220
+ switchport mode access
+ switchport voice vlan 633
+ switchport port-security maximum 2
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ srr-queue bandwidth share 1 30 35 5
+ priority-queue out 
+ mls qos trust device cisco-phone
+ mls qos trust cos
+ auto qos voip cisco-phone 
+ macro description cisco-phone
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ service-policy input AUTOQOS-SRND4-CISCOPHONE-POLICY
+!
+interface FastEthernet1/0/28
+ description Cam
+ switchport access vlan 777
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet1/0/29
+ description Cam
+ switchport access vlan 777
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet1/0/30
+ description Cam
+ switchport access vlan 777
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet1/0/31
+!
+interface FastEthernet1/0/32
+!
+interface FastEthernet1/0/33
+!
+interface FastEthernet1/0/34
+!
+interface FastEthernet1/0/35
+ description BB_Vending_H_2FL
+ switchport access vlan 702
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address 0024.8700.21a3 vlan access
+ spanning-tree portfast
+!
+interface FastEthernet1/0/36
+!
+interface FastEthernet1/0/37
+!
+interface FastEthernet1/0/38
+!
+interface FastEthernet1/0/39
+!
+interface FastEthernet1/0/40
+!
+interface FastEthernet1/0/41
+!
+interface FastEthernet1/0/42
+!
+interface FastEthernet1/0/43
+!
+interface FastEthernet1/0/44
+!
+interface FastEthernet1/0/45
+!
+interface FastEthernet1/0/46
+!
+interface FastEthernet1/0/47
+!
+interface FastEthernet1/0/48
+ description AP_H_202
+ switchport access vlan 104
+!
+interface GigabitEthernet1/0/1
+!
+interface GigabitEthernet1/0/2
+!
+interface GigabitEthernet1/0/3
+!
+interface GigabitEthernet1/0/4
+!
+interface Vlan1
+ ip address 148.4.101.182 255.255.255.0
+!
+ip default-gateway 148.4.101.66
+ip classless
+ip http server
+ip http secure-server
+!
+ip access-list extended AUTOQOS-ACL-DEFAULT
+ permit ip any any
+!
+access-list 11 permit 148.4.29.213
+access-list 11 permit 148.4.29.209
+access-list 11 permit 148.4.101.1
+snmp-server community private@es0 RW
+snmp-server community BK_cisco@es0 RO
+snmp-server community private@es0@es0 RW
+snmp-server community BK_cisco@es0@es0 RO
+snmp-server community BK_cisco RO
+snmp-server location H Building
+snmp-server contact Network Services ext. 1082
+snmp-server enable traps license
+tacacs-server host 148.4.252.2 key 7 011F57117B590D5E72
+tacacs-server host 148.4.172.2 key 7 011F57117B590D5E72
+tacacs-server directed-request
+!
+!
+line con 0
+ session-timeout 10 
+ logging synchronous
+ login authentication CONSOLE
+ stopbits 1
+line vty 0 4
+ session-timeout 10 
+ password 7 097F59000D061F3F0E
+ logging synchronous
+ length 0
+line vty 5 15
+ password 7 107D1E1011141A2609
+!
+ntp server 148.4.29.15
+ntp server 148.4.25.5
+end
+
+Hbuild_2fl#exit

@@ -1,0 +1,366 @@
+terminal length 0
+BKL_S_2nd_FL#sh run | exclude clock-period
+Building configuration...
+
+Current configuration : 8911 bytes
+!
+version 12.2
+no service pad
+service timestamps debug uptime
+service timestamps log uptime
+no service password-encryption
+!
+hostname BKL_S_2nd_FL
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$KAez$Fx7qH0u2FsLKS/nrdXgAl/
+!
+username netadmin secret 5 $1$beK/$xopPrbPVLjoSyOKrZ9ZAt1
+!
+!
+aaa new-model
+!
+!
+aaa authentication login default group tacacs+ local
+aaa authentication login CONSOLE group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa authorization exec default group tacacs+ local 
+aaa authorization commands 0 default group tacacs+ local 
+aaa authorization commands 1 default group tacacs+ none 
+aaa authorization commands 4 default group tacacs+ local 
+aaa authorization commands 15 default group tacacs+ local 
+aaa accounting exec default start-stop group tacacs+
+aaa accounting commands 1 default start-stop group tacacs+
+aaa accounting commands 15 default start-stop group tacacs+
+!
+!
+!
+aaa session-id common
+clock timezone EST -5
+switch 1 provision ws-c3750-48p
+system mtu routing 1500
+ip domain-name Bkl_Liunet.liu.edu
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-3629925248
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3629925248
+ revocation-check none
+ rsakeypair TP-self-signed-3629925248
+!
+!
+crypto pki certificate chain TP-self-signed-3629925248
+ certificate self-signed 01
+  30820245 308201AE A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 33363239 39323532 3438301E 170D3933 30333031 30303031 
+  35325A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D33 36323939 
+  32353234 3830819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100C7C6 EE610B5F 381C66F3 660356C0 14CDEF18 07FB91B8 9F14C93B F17A08BD 
+  6FAA5871 1D170AC0 1689BB7C 6F6A457C DBDFE54D E7ED975C 87B906BF 38331E01 
+  E2097D85 16FD494F AEC9DD2A 07F8958D 71CE9851 E0613A67 887B50BC C46FE686 
+  F5382410 5A439E48 20A9A841 A287260B F9C15C87 96C122A2 9DE81EBF 966539D6 
+  F6C10203 010001A3 6D306B30 0F060355 1D130101 FF040530 030101FF 30180603 
+  551D1104 11300F82 0D424B4C 5F535F32 6E645F46 4C2E301F 0603551D 23041830 
+  16801428 B5B80380 8C8AA2FC E73C69E1 89A21127 65588A30 1D060355 1D0E0416 
+  041428B5 B803808C 8AA2FCE7 3C69E189 A2112765 588A300D 06092A86 4886F70D 
+  01010405 00038181 0068F833 14CBD021 8E915CEF 55C9C529 10F65B2A 26235A87 
+  A58C483D 5705E915 AA7FCE16 A0CE5357 76B455E4 D4E4AB58 81E5E2BA B3199B99 
+  1CF7E570 B423DFEC E6413AD6 14D18263 2F56D52A 699E70F2 F353F2D8 EA6AECC2 
+  AF29D0E3 BC1759FC 4F1C1734 7477184B F6AF49C2 4B2AB1F9 3EAAC032 77D2D661 
+  1D7901AA 4FE89FAB 6D
+  quit
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+interface FastEthernet1/0/1
+ description Uplink----->
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet1/0/2
+!
+interface FastEthernet1/0/3
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/4
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/5
+ description BB_Vending_S_2FL
+ switchport access vlan 702
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address 0024.8700.2193 vlan access
+ spanning-tree portfast
+!
+interface FastEthernet1/0/6
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/7
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/8
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/9
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/10
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/11
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/12
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/13
+ switchport access vlan 104
+!
+interface FastEthernet1/0/14
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/15
+ switchport access vlan 104
+!
+interface FastEthernet1/0/16
+ switchport access vlan 104
+!
+interface FastEthernet1/0/17
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/18
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/19
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/20
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/21
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/22
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/23
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/24
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/25
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/26
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/27
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/28
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/29
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/30
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/31
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/32
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/33
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/34
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/35
+ description Radio_Station_MyFI_streamer
+ switchport access vlan 225
+ spanning-tree portfast
+!
+interface FastEthernet1/0/36
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/37
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/38
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/39
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/40
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/41
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/42
+ switchport access vlan 220
+ switchport voice vlan 610
+ spanning-tree portfast
+!
+interface FastEthernet1/0/43
+ description IPCAM
+ switchport access vlan 47
+ spanning-tree portfast
+!
+interface FastEthernet1/0/44
+ description IPCAM
+ switchport access vlan 47
+ spanning-tree portfast
+!
+interface FastEthernet1/0/45
+ description IPCAM
+ switchport access vlan 47
+ spanning-tree portfast
+!
+interface FastEthernet1/0/46
+ description IPCAM
+ switchport access vlan 47
+ spanning-tree portfast
+!
+interface FastEthernet1/0/47
+ description AP
+ switchport access vlan 104
+!
+interface FastEthernet1/0/48
+ description AP
+ switchport access vlan 104
+!
+interface GigabitEthernet1/0/1
+!
+interface GigabitEthernet1/0/2
+!
+interface GigabitEthernet1/0/3
+!
+interface GigabitEthernet1/0/4
+!
+interface Vlan1
+ ip address 148.4.101.142 255.255.255.0
+!
+ip classless
+ip http server
+ip http secure-server
+!
+!
+access-list 11 permit 148.4.29.213
+access-list 11 permit 148.4.29.209
+access-list 11 permit 148.4.101.1
+!
+snmp-server engineID local 0000000902000009B7F382C0
+snmp-server community BK_cisco RO 11
+snmp-server community BK_cisco@es0 RO
+snmp-server location S Building
+snmp-server contact Network Services ext. 1082
+snmp-server enable traps license
+tacacs-server host 148.4.252.2
+tacacs-server host 148.4.172.2 key 7 011F57117B590D5E72
+tacacs-server directed-request
+tacacs-server key 7 011F57117B590D5E72
+!
+!
+line con 0
+ logging synchronous
+ login authentication CONSOLE
+ stopbits 1
+line vty 0 4
+ password 7 0120110D4F080E2224
+line vty 5 15
+ password 7 06351828584D013400
+!
+ntp server 148.4.29.15
+ntp server 148.4.25.5
+end
+
+BKL_S_2nd_FL#exit

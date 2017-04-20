@@ -1,0 +1,25 @@
+terminal length 0
+LLC_NoC_PoEP#sh run | exclude clock-period
+Building configuration...
+
+Current configuration : 23855 bytes
+!
+! Last configuration change at 07:50:58 UTC Fri Mar 17 2017 by flopez
+!
+version 15.0
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+!
+hostname LLC_NoC_PoEP
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-vrf
+ !
+ address-family ipv4
+ exit
