@@ -1,6 +1,0 @@
-username = 'confbk'
-password = 'cisco2k13'
-dbuser = 'python'
-dbpass = 'bkliuedu'
-dbhost = '148.4.29.204'
-mydb = 'liunetdev'
